@@ -1,0 +1,111 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class bank {
+    string actholdername;
+    int act_number;
+    float initial_deposite;
+
+public:
+    // Constructor to initialize account details
+    bank(float amt, int actno, string name) {
+        actholdername = name;
+        act_number = actno;
+        initial_deposite = amt;
+    }
+
+    // Deposit function
+    void deposite(int amount) {
+        if (amount > 0) {
+            initial_deposite += amount;
+            cout << "Your amount $" << amount << " deposited successfully." << endl;
+            cout << "Updated Balance: $" << initial_deposite << endl;
+        } else {
+            cout << "Please enter a valid amount." << endl;
+        }
+    }
+
+    // Withdraw function
+    void withdraw(int amount) {
+        if (amount <= initial_deposite) {
+            initial_deposite -= amount;
+            cout << "Your amount $" << amount << " withdrawn successfully." << endl;
+            cout << "Your balance after withdrawal: $" << initial_deposite << endl;
+        } else {
+            cout << "Insufficient balance or incorrect amount!" << endl;
+        }
+    }
+
+    // Function to check balance
+    float check_balance() {
+        return initial_deposite;
+    }
+
+    // Display account details
+    void display() {
+        cout << "Account Holder Name: " << actholdername << endl;
+        cout << "Account Number: " << act_number << endl;
+        cout << "Current Balance: $" << initial_deposite << endl;
+    }
+};
+
+// Menu-driven program
+int main() {
+    int actno;
+    float amt;
+    string name;
+
+    cout << "Welcome to Prasad Bank" << endl;
+    cout << "Please create an account:" << endl;
+    cout << "Enter account holder name: ";
+    getline(cin, name);
+    cout << "Enter account number: ";
+    cin >> actno;
+    cout << "Enter initial deposit: $";
+    cin >> amt;
+
+    // Create bank account
+    bank b(amt, actno, name);
+
+    int choice;
+    float amount;
+
+    do {
+        // Display the menu options
+        cout << "\n--- Menu ---\n";
+        cout << "1. Display Account Details\n";
+        cout << "2. Deposit Money\n";
+        cout << "3. Withdraw Money\n";
+        cout << "4. Check Balance\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                b.display();
+                break;
+            case 2:
+                cout << "Enter amount to deposit: $";
+                cin >> amount;
+                b.deposite(amount);
+                break;
+            case 3:
+                cout << "Enter amount to withdraw: $";
+                cin >> amount;
+                b.withdraw(amount);
+                break;
+            case 4:
+                cout << "Current Balance: $" << b.check_balance() << endl;
+                break;
+            case 5:
+                cout << "Thank you for using the system. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
